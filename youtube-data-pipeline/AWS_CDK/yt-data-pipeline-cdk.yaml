@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Metadata:
   AWSToolsMetrics:
-    IaC_Generator: "arn:aws:cloudformation:ap-south-1:[Account-ID]:generatedTemplate/0c395a61-c33e-46a2-91e3-2371087769cd"
+    IaC_Generator: "arn:aws:cloudformation:ap-south-1:[Account-ID]:generatedTemplate/0c395a61-c33e-[random-number]371087769cd"
 
 Parameters:
   LambdaFunctionYtdatapipelineyoutubeingestiondevCodeImageUrihwJ9M:
