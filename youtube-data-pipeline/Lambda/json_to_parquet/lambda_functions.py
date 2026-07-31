@@ -1,5 +1,6 @@
 """
-Lambda: JSON Reference Data (Bronze layer) → Silver Layer (Parquet)
+Lambda function name : yt-data-pipeline-json-to-parquet-dev
+Lambda: JSON Reference Data Raw → Silver Layer (Parquet Format)
 ────────────────────────────────────────────────────
 Triggered by S3 event when new JSON lands in the Bronze bucket
 under the reference_data prefix.
@@ -8,7 +9,7 @@ Improvements over original:
   - Data validation before writing
   - Deduplication of category records
   - Proper error handling with dead-letter alerting
-  - Idempotent writes (overwrites partition, not append)
+  - Idempotent writes (overwrites partition, not append)**
   - Structured logging
 
 Environment Variables:
@@ -16,6 +17,11 @@ Environment Variables:
     GLUE_DB_SILVER              — Glue catalog database name
     GLUE_TABLE_REFERENCE        — Glue catalog table name
     SNS_ALERT_TOPIC_ARN         — SNS topic for alerts (optional)
+
+
+GLUE_DB_SILVER       - yt_pipeline_silver_dev
+S3_BUCKET_SILVER     -yt-data-silver-dev
+SNS_ALERT_TOPIC_ARN  -yt-data-pipeline-alerts-dev
 """
 
 import json
@@ -84,6 +90,18 @@ def validate_category_data(df: pd.DataFrame) -> pd.DataFrame:
 def send_alert(subject: str, message: str):
     if SNS_TOPIC:
         sns_client.publish(TopicArn=SNS_TOPIC, Subject=subject[:100], Message=message)
+
+
+"""
+Entry Point for lambda and the purpose it serves:
+Receive an S3 event when a new YouTube category JSON file arrives.
+Read the JSON file from S3.
+Convert it into a Pandas DataFrame.
+Validate and clean the data.
+Add metadata columns.
+Write the result as Parquet into the Silver layer.
+Send an SNS alert if anything fails.
+Return a processing summary."""
 
 
 def lambda_handler(event, context):
