@@ -10,9 +10,15 @@ with a real, automated, live data ingestion pipeline.
 
 Environment Variables:
     YOUTUBE_API_KEY       — Google API key with YouTube Data API v3 enabled
-    S3_BUCKET_BRONZE      — Target S3 bucket for raw data
-    YOUTUBE_REGIONS       — Comma-separated region codes (default: US,GB,CA,...)
+    S3_BUCKET_BRONZE      — Target S3 bucket for raw data (Bronze Bucket)
+    YOUTUBE_REGIONS       — Comma-separated region codes (default: US,GB,CA,IN,...)
     SNS_ALERT_TOPIC_ARN   — SNS topic for failure alerts
+
+
+    S3_BUCKET_BRONZE   - yt-data-bronze-dev
+    SNS_ALERT_TOPIC_ARN - arn:aws:sns:ap-south-1:[account-Id]:yt-data-pipeline-alerts-dev
+    YOUTUBE_API_KEY  - AIzaSyAJT9gDq_[random-values-replacing correct value]-hV-WLofk
+    YOUTUBE_REGIONS - US,GB,CA,IN
 """
 
 import json
