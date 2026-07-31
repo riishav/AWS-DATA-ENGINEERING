@@ -1,0 +1,244 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+  AWSToolsMetrics:
+    IaC_Generator: "arn:aws:cloudformation:ap-south-1:[Account-ID]:generatedTemplate/0c395a61-c33e-[random-number]371087769cd"
+
+Parameters:
+  LambdaFunctionYtdatapipelineyoutubeingestiondevCodeImageUrihwJ9M:
+    NoEcho: "true"
+    Type: "String"
+    Description: "URI of a container image in ECR."
+  LambdaFunctionYtdatapipelinedataqualitydevCodeS3BucketLgdbJ:
+    NoEcho: "true"
+    Type: "String"
+    Description: "S3 bucket for Lambda code."
+  LambdaFunctionYtdatapipelinedataqualitydevCodeS3ObjectVersiongfpiW:
+    NoEcho: "true"
+    Type: "String"
+    Description: "S3 object version for Lambda code."
+  LambdaFunctionYtdatapipelineyoutubeingestiondevCodeS3BucketD0sJO:
+    NoEcho: "true"
+    Type: "String"
+    Description: "S3 bucket for Lambda code."
+  LambdaFunctionYtdatapipelineyoutubeingestiondevCodeSourceKMSKeyArn5k9Ua:
+    NoEcho: "true"
+    Type: "String"
+    Description: "KMS key ARN for Lambda code encryption."
+  LambdaFunctionYtdatapipelinejsontoparquetdevCodeImageUri3YByT:
+    NoEcho: "true"
+    Type: "String"
+    Description: "URI of a container image in ECR."
+  LambdaFunctionYtdatapipelinejsontoparquetdevCodeS3ObjectStorageModehWPRU:
+    NoEcho: "true"
+    Type: "String"
+  LambdaFunctionYtdatapipelinejsontoparquetdevCodeS3ObjectVersionupza1:
+    NoEcho: "true"
+    Type: "String"
+  LambdaFunctionYtdatapipelinejsontoparquetdevCodeS3Key2RqMN:
+    NoEcho: "true"
+    Type: "String"
+  LambdaFunctionYtdatapipelinedataqualitydevCodeZipFilepadkV:
+    NoEcho: "true"
+    Type: "String"
+  LambdaFunctionYtdatapipelinedataqualitydevCodeS3ObjectStorageModednOcE:
+    NoEcho: "true"
+    Type: "String"
+  LambdaFunctionYtdatapipelinedataqualitydevCodeSourceKMSKeyArnK2BxG:
+    NoEcho: "true"
+    Type: "String"
+  LambdaFunctionYtdatapipelineyoutubeingestiondevCodeS3ObjectStorageMode5Acmp:
+    NoEcho: "true"
+    Type: "String"
+  LambdaFunctionYtdatapipelinedataqualitydevCodeImageUriUi3vR:
+    NoEcho: "true"
+    Type: "String"
+  LambdaFunctionYtdatapipelineyoutubeingestiondevCodeS3Keyhmb8o:
+    NoEcho: "true"
+    Type: "String"
+  LambdaFunctionYtdatapipelinejsontoparquetdevCodeZipFileM5Iuk:
+    NoEcho: "true"
+    Type: "String"
+  LambdaFunctionYtdatapipelinejsontoparquetdevCodeS3BucketXnUMc:
+    NoEcho: "true"
+    Type: "String"
+  LambdaFunctionYtdatapipelinedataqualitydevCodeS3KeyBFmmT:
+    NoEcho: "true"
+    Type: "String"
+  LambdaFunctionYtdatapipelinejsontoparquetdevCodeSourceKMSKeyArnBuZ0H:
+    NoEcho: "true"
+    Type: "String"
+
+Resources:
+  ### Lambda functions 
+  LambdaFunctionYtdatapipelineyoutubeingestiondev:
+    Type: "AWS::Lambda::Function"
+    DeletionPolicy: "Delete"
+    UpdateReplacePolicy: "Delete"
+    Properties:
+      FunctionName: "yt-data-pipeline-youtube-ingestion-dev"
+      Description: ""
+      Runtime: "python3.11"
+      Handler: "lambda_function.lambda_handler"
+      Role: "arn:aws:iam::[Account-ID]:role/yt-data-pipeline-lambda-role-dev"
+      Timeout: 300
+      MemorySize: 512
+      PackageType: "Zip"
+      Code:
+        SourceKMSKeyArn:
+          Ref: "LambdaFunctionYtdatapipelineyoutubeingestiondevCodeSourceKMSKeyArn5k9Ua"
+        S3ObjectVersion:
+          Ref: "LambdaFunctionYtdatapipelineyoutubeingestiondevCodeS3ObjectVersionSFV5n"
+        S3Bucket:
+          Ref: "LambdaFunctionYtdatapipelineyoutubeingestiondevCodeS3BucketD0sJO"
+        ZipFile:
+          Ref: "LambdaFunctionYtdatapipelineyoutubeingestiondevCodeZipFilejEO0X"
+        S3Key:
+          Ref: "LambdaFunctionYtdatapipelineyoutubeingestiondevCodeS3Keyhmb8o"
+        S3ObjectStorageMode:
+          Ref: "LambdaFunctionYtdatapipelineyoutubeingestiondevCodeS3ObjectStorageMode5Acmp"
+        ImageUri:
+          Ref: "LambdaFunctionYtdatapipelineyoutubeingestiondevCodeImageUrihwJ9M"
+      Environment:
+        Variables:
+          YOUTUBE_API_KEY: "API KEY VALUE"
+          SNS_ALERT_TOPIC_ARN: "arn:aws:sns:ap-south-1:[Account-ID]:yt-data-pipeline-alerts-dev"
+          S3_BUCKET_BRONZE: "yt-data-bronze-dev"
+          YOUTUBE_REGIONS: "US,GB,CA,IN"
+      EphemeralStorage:
+        Size: 1024
+      TracingConfig:
+        Mode: "PassThrough"
+      RuntimeManagementConfig:
+        UpdateRuntimeOn: "Auto"
+      FileSystemConfigs: []
+      Architectures:
+        - "x86_64"
+      LoggingConfig:
+        LogFormat: "Text"
+        LogGroup: "/aws/lambda/yt-data-pipeline-youtube-ingestion-dev"
+
+  LambdaPermissionFunctionytdatapipelinejsontoparquetdev:
+    Type: "AWS::Lambda::Permission"
+    DeletionPolicy: "Delete"
+    UpdateReplacePolicy: "Delete"
+    Properties:
+      FunctionName: "arn:aws:lambda:ap-south-1:[Account-ID]:function:yt-data-pipeline-json-to-parquet-dev"
+      Action: "lambda:InvokeFunction"
+      Principal: "s3.amazonaws.com"
+      SourceArn: "arn:aws:s3:::yt-data-bronze-dev"
+      SourceAccount: "[Account-ID]"
+
+  ### Glue resources
+  GlueJobYtdatapipelinebronzetosilverdev:
+    Type: "AWS::Glue::Job"
+    DeletionPolicy: "Delete"
+    UpdateReplacePolicy: "Delete"
+    Properties:
+      Name: "yt-data-pipeline-bronze-to-silver-dev"
+      Role: "arn:aws:iam::[Account-ID]:role/yt-data-pipeline-glue-role-dev"
+      Command:
+        Name: "glueetl"
+        ScriptLocation: "s3://aws-glue-assets-[Account-ID]-ap-south-1/scripts/yt-data-pipeline-bronze-to-silver-dev.py"
+        PythonVersion: "3"
+      GlueVersion: "5.1"
+      MaxRetries: 0
+      Timeout: 480
+      NumberOfWorkers: 2
+      WorkerType: "G.1X"
+      ExecutionClass: "STANDARD"
+      ExecutionProperty:
+        MaxConcurrentRuns: 1
+      DefaultArguments:
+        "--silver_database": "yt_pipeline_silver_dev"
+        "--enable-glue-datacatalog": ""
+        "--bronze_table": "raw_statistics"
+        "--job-bookmark-option": "job-bookmark-disable"
+        "--bronze_database": "yt_pipeline_bronze_dev"
+        "--TempDir": "s3://aws-glue-assets-[Account-ID]-ap-south-1/temporary/"
+        "--silver_bucket": "yt-data-silver-dev"
+        "--enable-spark-ui": "true"
+        "--enable-metrics": ""
+        "--spark-event-logs-path": "s3://aws-glue-assets-[Account-ID]-ap-south-1/sparkHistoryLogs/"
+        "--silver_table": "clean_statistics"
+        "--enable-job-insights": "true"
+        "--enable-observability-metrics": "true"
+        "--conf": "spark.eventLog.rolling.enabled=true --conf spark.sql.catalog.glue_catalog.glue.skip-name-validation=true"
+        "--enable-continuous-cloudwatch-log": "true"
+        "--job-language": "python"
+
+  GlueDatabaseYtpipelinesilverdev:
+    Type: "AWS::Glue::Database"
+    DeletionPolicy: "Delete"
+    UpdateReplacePolicy: "Delete"
+    Properties:
+      CatalogId: "[Account-ID]"
+      DatabaseInput:
+        Name: "yt_pipeline_silver_dev"
+        Description: "Youtube Data Pipeline - Cleansed Data"
+        CreateTableDefaultPermissions:
+          - Principal:
+              DataLakePrincipalIdentifier: "IAM_ALLOWED_PRINCIPALS"
+            Permissions:
+              - "ALL"
+        Parameters: {}
+
+  ### Step Functions
+  StepFunctionsStateMachineStateMachineytdatapipelineorchestration:
+    Type: "AWS::StepFunctions::StateMachine"
+    DeletionPolicy: "Delete"
+    UpdateReplacePolicy: "Delete"
+    Properties:
+      StateMachineName: "yt-data-pipeline-orchestration"
+      RoleArn: "arn:aws:iam::[Account-ID]:role/yt-data-pipeline-stepfunctions-role-dev"
+      StateMachineType: "STANDARD"
+      DefinitionString: >-
+        {"Comment":"YouTube Data Pipeline ? Full orchestration via Step Functions. Replaces manual execution of individual jobs.","StartAt":"IngestFromYouTubeAPI","States":{"IngestFromYouTubeAPI":{"Type":"Task","Resource":"arn:aws:states:::lambda:invoke","Parameters":{"FunctionName":"arn:aws:lambda:ap-south-1:[Account-ID]:function:yt-data-pipeline-youtube-ingestion-dev","Payload":{"triggered_by":"step_functions","execution_id.$":"$$.Execution.Id"}},"ResultPath":"$.ingestion_result","Retry":[{"ErrorEquals":["Lambda.ServiceException","Lambda.TooManyRequestsException"],"IntervalSeconds":30,"MaxAttempts":3,"BackoffRate":2}],"Catch":[{"ErrorEquals":["States.ALL"],"Next":"NotifyIngestionFailure","ResultPath":"$.error"}],"Next":"WaitForS3Consistency"},"WaitForS3Consistency":{"Type":"Wait","Seconds":10,"Comment":"Brief wait to ensure S3 eventual consistency for newly written objects","Next":"ProcessInParallel"},"ProcessInParallel":{"Type":"Parallel","Comment":"Run reference data transform and statistics ETL in parallel","Branches":[{"StartAt":"TransformReferenceData","States":{"TransformReferenceData":{"Type":"Task","Resource":"arn:aws:states:::lambda:invoke","Parameters":{"FunctionName":"arn:aws:lambda:ap-south-1:[Account-ID]:function:yt-data-pipeline-json-to-parquet-dev","Payload":{"triggered_by":"step_functions"}},"ResultPath":"$.reference_result","Retry":[{"ErrorEquals":["States.ALL"],"IntervalSeconds":15,"MaxAttempts":2,"BackoffRate":2}],"End":true}}},{"StartAt":"RunBronzeToSilverGlueJob","States":{"RunBronzeToSilverGlueJob":{"Type":"Task","Resource":"arn:aws:states:::glue:startJobRun.sync","Parameters":{"JobName":"yt-data-pipeline-bronze-to-silver-dev","Arguments":{"--bronze_database":"yt_pipeline_bronze_dev","--bronze_table":"raw_statistics","--silver_bucket":"yt-data-silver-dev","--silver_database":"yt_pipeline_silver_dev","--silver_table":"clean_statistics"}},"ResultPath":"$.glue_bronze_silver_result","Retry":[{"ErrorEquals":["States.ALL"],"IntervalSeconds":60,"MaxAttempts":2,"BackoffRate":2}],"End":true}}],"ResultPath":"$.parallel_results","Catch":[{"ErrorEquals":["States.ALL"],"Next":"NotifyTransformFailure","ResultPath":"$.error"}],"Next":"RunDataQualityChecks"},"RunDataQualityChecks":{"Type":"Task","Resource":"arn:aws:states:::lambda:invoke","Parameters":{"FunctionName":"arn:aws:lambda:ap-south-1:[Account-ID]:function:yt-data-pipeline-data-quality-dev","Payload":{"layer":"silver","database":"yt_pipeline_silver_dev","tables":["clean_statistics","clean_reference_data"]}},"ResultPath":"$.dq_result","Retry":[{"ErrorEquals":["States.ALL"],"IntervalSeconds":15,"MaxAttempts":2,"BackoffRate":2}],"Next":"EvaluateDataQuality"},"EvaluateDataQuality":{"Type":"Choice","Choices":[{"Variable":"$.dq_result.Payload.quality_passed","BooleanEquals":true,"Next":"RunSilverToGoldGlueJob"}],"Default":"NotifyDQFailure"},"RunSilverToGoldGlueJob":{"Type":"Task","Resource":"arn:aws:states:::glue:startJobRun.sync","Parameters":{"JobName":"yt-data-pipeline-silver-to-gold-dev","Arguments":{"--silver_database":"yt_pipeline_silver_dev","--gold_bucket":"yt-data-gold-dev","--gold_database":"yt_pipeline_gold_dev"}},"ResultPath":"$.glue_gold_result","Retry":[{"ErrorEquals":["States.ALL"],"IntervalSeconds":60,"MaxAttempts":2,"BackoffRate":2}],"Catch":[{"ErrorEquals":["States.ALL"],"Next":"NotifyGoldFailure","ResultPath":"$.error"}],"Next":"NotifySuccess"},"NotifySuccess":{"Type":"Task","Resource":"arn:aws:states:::sns:publish","Parameters":{"TopicArn":"arn:aws:sns:ap-south-1:[Account-ID]:yt-data-pipeline-alerts-dev","Subject":"[YT Pipeline] Pipeline completed successfully","Message.$":"States.Format('Pipeline run {} completed. All layers updated.', $$.Execution.Id)"},"End":true},"NotifyIngestionFailure":{"Type":"Task","Resource":"arn:aws:states:::sns:publish","Parameters":{"TopicArn":"arn:aws:sns:ap-south-1:[Account-ID]:yt-data-pipeline-alerts-dev","Subject":"[YT Pipeline] FAILURE ? Ingestion step failed","Message.$":"States.JsonToString($.error)"},"End":true},"NotifyTransformFailure":{"Type":"Task","Resource":"arn:aws:states:::sns:publish","Parameters":{"TopicArn":"arn:aws:sns:ap-south-1:[Account-ID]:yt-data-pipeline-alerts-dev","Subject":"[YT Pipeline] FAILURE ? Transform step failed","Message.$":"States.JsonToString($.error)"},"End":true},"NotifyDQFailure":{"Type":"Task","Resource":"arn:aws:states:::sns:publish","Parameters":{"TopicArn":"arn:aws:sns:ap-south-1:[Account-ID]:yt-data-pipeline-alerts-dev","Subject":"[YT Pipeline] WARNING ? Data quality checks failed","Message.$":"States.JsonToString($.dq_result)"},"End":true},"NotifyGoldFailure":{"Type":"Task","Resource":"arn:aws:states:::sns:publish","Parameters":{"TopicArn":"arn:aws:sns:ap-south-1:[Account-ID]:yt-data-pipeline-alerts-dev","Subject":"[YT Pipeline] FAILURE ? Gold aggregation failed","Message.$":"States.JsonToString($.error)"},"End":true}}}
+
+      EncryptionConfiguration:
+        Type: "AWS_OWNED_KEY"
+      LoggingConfiguration:
+        IncludeExecutionData: false
+        Level: "OFF"
+      TracingConfiguration:
+        Enabled: false
+      Tags: []
+
+  ### IAM Role for Step Functions
+  IAMRoleYtdatapipelinestepfunctionsroledev:
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Delete"
+    UpdateReplacePolicy: "Delete"
+    Properties:
+      RoleName: "yt-data-pipeline-stepfunctions-role-dev"
+      Path: "/"
+      Description: "Allows Step Functions to access AWS resources on your behalf."
+      MaxSessionDuration: 3600
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/service-role/AWSLambdaRole"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - "states.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Policies:
+        - PolicyName: "yt-data-pipeline-sfn-access"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: "Allow"
+                Action: "lambda:InvokeFunction"
+                Resource: "arn:aws:lambda:us-east-1:[Account-ID]:function:yt-data-pipeline-*"
+              - Effect: "Allow"
+                Action:
+                  - "glue:StartJobRun"
+                  - "glue:GetJobRun"
+                  - "glue:GetJobRuns"
+                  - "glue:BatchStopJobRun"
+                Resource: "*"
+              - Effect: "Allow"
+                Action: "sns:Publish"
+                Resource: "arn:aws:sns:ap-south-1:[Account-ID]:yt-data-pipeline-alerts-dev"
